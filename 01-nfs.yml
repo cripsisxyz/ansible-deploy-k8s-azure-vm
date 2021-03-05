@@ -1,0 +1,27 @@
+---
+- hosts: nfs
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: "Instalar dependencias y nfs"
+      dnf:
+        name:
+          - "nfs-utils"
+          - "net-tools"
+        state: present
+    - name: "Servicio habilitado y arrancado"
+      systemd:
+        name: nfs-server
+        state: started
+        enabled: true
+
+- hosts: node
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: "Instalar dependencias y nfs"
+      dnf:
+        name:
+          - "nfs-utils"
+        state: present
+

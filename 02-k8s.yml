@@ -1,0 +1,32 @@
+---
+- hosts: all
+  gather_facts: false
+  become: yes
+  tasks:
+    - name: Temporally disable firewalld
+      service:
+        name: firewalld
+        state: stopped
+        enabled: False
+
+        
+- hosts: kube-cluster
+  gather_facts: false
+  become: yes
+  roles:
+    - { role: docker, tags: docker }
+ 
+- hosts: master
+  gather_facts: false
+  become: yes
+  roles:
+    - { role: kubernetes/master, tags: master }
+    - { role: cni, tags: cni }
+    - { role: haproxy, tags: haproxy}
+ 
+- hosts: node
+  gather_facts: false
+  become: yes
+  roles:
+    - { role: kubernetes/node, tags: node }
+

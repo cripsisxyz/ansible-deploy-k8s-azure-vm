@@ -1,0 +1,15 @@
+---
+- name: Add Docker yum repository
+  yum_repository:
+    name: docker-ce
+    description: Docker Repository
+    file: docker
+    baseurl: https://download.docker.com/linux/centos/8/x86_64/stable
+    enabled: yes
+    gpgcheck: no
+
+- name: Install docker engine (RHEL/CentOS)
+  dnf:
+    name: "docker-ce"
+    state: present
+    enablerepo: "docker-ce"

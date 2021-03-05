@@ -1,0 +1,16 @@
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=ansible
+[master]
+master.local
+[worker]
+worker.local
+[node]
+worker.local
+[nfs]
+master.local
+
+
+[kube-cluster:children]
+master
+node
